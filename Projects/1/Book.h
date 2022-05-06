@@ -1,45 +1,35 @@
 #ifndef BOOK_H
 #define BOOK_H
 #include<iostream>
-#include<cstring>
+#include"String.h"
+
 class Book
 {
 private:
-    char* author;
-    char* title;
-    char* nameFale;
-    char* shortDescription;
+    String author;
+    String title;
+    String nameFale;
+    String shortDescription;
     double rating;
-    char* ISBN;
-
-    char* allocateMemory(char* s);
-    void deleteMemory(char* s);
+    String ISBN;
 public:
     Book();
-    Book(char* , char*, char* , char* , double , char* );
+    Book(String , String, String , String , double , String );
     Book(const Book& );
     Book& operator=(const Book& );
-    ~Book();
 
-    
-    void setAuthor(char* );
-    void setTitle(char* );
-    void setNameFile(char* );
-    void setShortDescripion(char* );
-    void setRating(double );
-    void setISBN(char* );
-
-    char* getAuthor() const;
-    char* getTitle() const;
-    char* getNameFile() const;
-    char* getShortDescripion() const;
+    String getAuthor() const;
+    String getTitle() const;
+    String getNameFile() const;
+    String getShortDescripion() const;
     double getRating() const;
-    char* getISBN() const;
+    String getISBN() const;
 
     void print();
-    friend std::istream& operator>>(std::istream& is, Book&);
 
+    friend std::istream& operator>>(std::istream& is, Book&);
+    friend std::ostream& operator<<(std::ostream& os, const Book&);
+    
 };
-std::ostream& operator<<(std::ostream& os, Book const&);
 
 #endif
