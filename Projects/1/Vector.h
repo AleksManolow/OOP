@@ -1,209 +1,324 @@
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef __VECTOR_H
+#define __VECTOR_H
+
 #include <iostream>
+
+#define DEFAULT_CAPACITY 8
 
 template <typename T>
 class Vector
 {
 private:
-    T* arr;
-    int capacity;
-    int size;
+    T* mData;
+    size_t mSize;
+    size_t mCapacity;
 
+    void resize(size_t newSize, size_t newCapacity);
+    void copy(T* data);
 public:
     Vector();
+    Vector(size_t capacity);
+    
     Vector(const Vector<T>& other);
-    Vector& operator=(const Vector<T>& other);
+    Vector(Vector<T>&& other);
+
+    Vector<T>& operator=(const Vector<T>& other);
+    Vector<T>& operator=(Vector<T>&& other);
     ~Vector();
 
-    void resize(); // increases the capacity
-    void push(size_t index, T element);// adds element at wanted index
-    void pushAtBack(T element); // adds element at the back
-    T get(int index); // gets the element at wanted index
-    void pop(); // removes the last element 
-    int getsize() const; // returns the size
-    void print(); // prints the vector
-    void clearVector();
-	void eraseAt(int index);
+    size_t getCapacity() const;
+    size_t getSize() const;
+    T getAt(size_t index) const;
+    T& getAt(size_t index);
 
-    T& operator[](size_t i);
-    T operator[](size_t i) const;
+    bool isEmpty() const;
+    
+    T getFirst() const;
+    T getLast() const;
 
-    template <typename E>
-    friend std::ostream& operator<<(std::ostream&, Vector<E>);
-  
+    void assign(size_t n, const T& x);
+    void pushBack(const T& x);
+    void popBack();
+    void removeAt(size_t index);
+    bool operator==(const Vector<T>& other) const;
+    Vector operator+(const Vector<T>& other);
+
+    T& operator[](size_t index);
+    T operator[](size_t index) const;
+
+    template<typename U>
+    friend std::ostream& operator<<(std::ostream& out, const Vector<U>& other);
+    
+    template<typename U>
+    friend std::istream& operator>>(std::istream& in, Vector<U>& other);
 };
 
+template<typename T>
+void Vector<T>::resize(size_t newSize, size_t newCapacity)
+{
+    bool shouldErase = false;
+    if ((this->mCapacity * 3) / 4 <= newSize)
+    {
+        this->mCapacity = newCapacity;
+        shouldErase = true;
+    }
+
+    if (this->mCapacity / 4 >= newSize)
+    {
+        this->mCapacity = newCapacity;
+        shouldErase = true;
+    }
+
+    if (shouldErase)
+    {
+        T* save = this->mData;
+        this->copy(save);
+        
+        delete[] save;
+    }
+}
+
+template<typename T>
+void Vector<T>::copy(T* data)
+{
+    this->mData = new T[this->mCapacity];
+    for(size_t i = 0; i < this->mSize; i++)
+    {
+        this->mData[i] = data[i];
+    }
+}
 
 template <typename T>
 Vector<T>::Vector()
+    : mCapacity(DEFAULT_CAPACITY),
+      mSize(0)
 {
-	capacity = 8;
-	size = 0;
-	arr = new T[capacity];
+    this->mData = new T[this->mCapacity];
 }
 
+template <typename T>
+Vector<T>::Vector(size_t capacity)
+    : mCapacity(capacity),
+      mSize(0)
+{
+    this->mData = new T[this->mCapacity];
+}
 
-template<typename T>
+template <typename T>
 Vector<T>::Vector(const Vector<T>& other)
+    : mCapacity(other.mCapacity),
+      mSize(other.mSize)
 {
-	size = other.size;
-	capacity = other.capacity;
-	arr = new T[capacity];
-	for (size_t i = 0; i < size; i++)
-	{
-		arr[i] = other.arr[i];
-	}
+    this->copy(other.mData);
 }
 
-template<typename T>
+template <typename T>
+Vector<T>::Vector(Vector<T>&& other)
+    : mCapacity(other.mCapacity),
+      mSize(other.mSize)
+{
+    this->mData = other.mData;
+    other.mData = nullptr;
+}
+
+template <typename T>
 Vector<T>& Vector<T>::operator=(const Vector<T>& other)
 {
-	if (this != &other)
-	{
-		delete[] arr;
+    if (this != &other)
+    {
+        delete[] this->mData;
+        this->mCapacity = other.mCapacity;
+        this->mSize = other.mSize;
+        this->copy(other.mData);
+    }
 
-		size = other.size;
-		capacity = other.capacity;
-		arr = new T[capacity];
+    return *this;
+}
 
-		for (size_t i = 0; i < size; i++)
-		{
-			arr[i] = other.arr[i];
-		}
-	}
+template <typename T>
+Vector<T>& Vector<T>::operator=(Vector<T>&& other)
+{
+    if (this != &other)
+    {
+        delete[] this->mData;
+        this->mCapacity = other.mCapacity;
+        this->mSize = other.mSize;
+        this->mData = other.mData;
+        other.mData = nullptr;
+    }
 
-	return *this;
+    return *this;
 }
 
 template<typename T>
 Vector<T>::~Vector()
 {
-	if (arr != nullptr)
-		delete[]arr;
-	size = capacity = 0;
+    delete[] this->mData;
 }
 
-
-template<typename T>
-void Vector<T>::resize()
+template <typename T>
+size_t Vector<T>::getCapacity() const
 {
-	capacity *= 2;
-	T* temporary = new T[capacity];
-
-	for (size_t i = 0; i < size; i++)
-	{
-		temporary[i] = arr[i];
-	}
-	delete[] arr;
-	arr = temporary;
+    return this->mCapacity;
 }
 
-
-
-template<typename T>
-void Vector<T>::push(size_t index, T element)
+template <typename T>
+size_t Vector<T>::getSize() const
 {
-	if (size >= capacity)
-	{
-		this->resize();
-	}
-
-	size++;
-
-	for (size_t i = size - 1; i > index; i--)
-	{
-		arr[i] = arr[i - 1];
-	}
-
-	arr[index] = element;
+    return this->mSize;
 }
 
-template<typename T>
-void Vector<T>::pushAtBack(T element)
+template <typename T>
+T Vector<T>::getAt(size_t index) const
 {
-	if (size >= capacity)
-	{
-		this->resize();
-	}
+    if (index >= this->mSize)
+    {
+        throw "Index out of bounds!\n";
+    }
 
-	arr[size] = element;
-	size++;
-
+    return this->mData[index];
 }
 
-template<typename T>
-T Vector<T>::get(int index)
+template <typename T>
+T& Vector<T>::getAt(size_t index)
 {
-	return arr[index];
+    if (index >= this->mSize)
+    {
+        throw "Index out of bounds!\n";
+    }
+
+    return this->mData[index];
 }
 
-template<typename T>
-void Vector<T>::pop()
+template <typename T>
+bool Vector<T>::isEmpty() const
 {
-	size--;
+    return this->mSize == 0;
 }
 
-template<typename T>
-int Vector<T>::getsize() const
+template <typename T>
+T Vector<T>::getFirst() const
 {
-	return size;
+    return this->getAt(0);
 }
 
-template<typename T>
-void Vector<T>::print()
+template <typename T>
+T Vector<T>::getLast() const
 {
-	for (size_t i = 0; i < size; i++)
-	{
-		std::cout << arr[i] << " ";
-	}
-
+    return this->getAt(this->mSize - 1);
 }
 
-template<typename T>
-void Vector<T>::clearVector()
+template <typename T>
+void Vector<T>::assign(size_t n, const T& x)
 {
-	if (arr != nullptr)
-		delete[]arr;
+    this->mSize = n;
+    this->resize(n, (n*4)/3);
 
-	capacity = 8;
-	size = 0;
-	arr = new T[capacity];
+    for(size_t i = 0; i < n; i++)
+    {
+        this->mData[i] = x;
+    }
 }
 
-template<typename T>
-inline void Vector<T>::eraseAt(int index)
+template <typename T>
+void Vector<T>::pushBack(const T& x)
 {
-	size--;
-	for (index; index < size; index++)
-	{
-		arr[index] = arr[index + 1];
-	}
-
+    this->mSize++;
+    this->resize(this->mSize, this->mCapacity * 2);
+    this->mData[this->mSize - 1] = x;
 }
 
-template<typename T>
-T& Vector<T>::operator[](size_t i)
+template <typename T>
+void Vector<T>::popBack()
 {
-	return arr[i];
+    --this->mSize;
+    this->resize(this->mSize, this->mCapacity / 2);
 }
 
-template<typename T>
-T Vector<T>::operator[](size_t i) const
+template <typename T>
+void Vector<T>::removeAt(size_t index)
 {
-	return arr[i];
+    if (index >= this->mSize)
+    {
+        throw "Index out of bounds!\n";
+    }
+
+    for(size_t i = index; i < this->mSize - 1; i++)
+    {
+        this->mData[i] = this->mData[i + 1];
+    }
+
+    --this->mSize;
+    this->resize(this->mSize, this->mCapacity / 2);
 }
 
-
-template<typename E>
-inline std::ostream& operator<<(std::ostream& out, Vector<E> vec)
+template <typename T>
+bool Vector<T>::operator==(const Vector<T>& other) const
 {
-	out << "{";
-	for (size_t i = 0; i < vec.size; ++i)
-	{
-		out << vec.arr[i] << " ";
-	}
-	out << "}";
-	return out;
+    if (this->mSize == other.mSize)
+    {
+        for(size_t i = 0; i < this->mSize; i++)
+        {
+            if (this->mData[i] != other.mData[i])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    return false;
 }
+
+template <typename T>
+Vector<T> Vector<T>::operator+(const Vector<T>& other)
+{
+    Vector<T> result(*this);
+
+    for(size_t i = 0; i < other.mSize; i++)
+    {
+        result.pushBack(other.mData[i]);
+    }
+
+    return result;
+}
+
+template <typename T>
+T Vector<T>::operator[](size_t index) const
+{
+    return this->getAt(index);
+}
+
+template <typename T>
+T& Vector<T>::operator[](size_t index)
+{
+    return this->getAt(index);
+}
+
+template<typename U>
+std::ostream& operator<<(std::ostream& out, const Vector<U>& other)
+{
+    out << other.mSize << '\n';
+    for(size_t i = 0; i < other.mSize; i++)
+    {
+        out << other.mData[i];
+    }
+
+    return out;
+}
+
+template<typename U>
+std::istream& operator>>(std::istream& in, Vector<U>& other)
+{
+    in >> other.mSize; 
+	in.ignore();
+    for(size_t i = 0; i < other.mSize; i++)
+    {
+        in >> other.mData[i];
+    }
+
+    return in;
+}
+
 #endif
