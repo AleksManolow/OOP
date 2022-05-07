@@ -27,6 +27,8 @@ public:
 
     void print();
 
+    bool operator==(const Book&) const;
+
     friend std::istream& operator>>(std::istream& is, Book&);
     friend std::ostream& operator<<(std::ostream& os, const Book&);
     

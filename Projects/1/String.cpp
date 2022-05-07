@@ -124,7 +124,10 @@ bool String::isEmpty() const
 {
     return this->size() == 0;
 }
-
+char* String::returnChar()
+{
+    return mData;
+}
 void String::swap(String& other)
 {
     std::swap(this->mCapacity, other.mCapacity);
@@ -188,7 +191,19 @@ bool String::operator==(const String& other) const
     return this->mCapacity == other.mCapacity &&
            strcmp(this->mData, other.mData) == 0;
 }
-
+bool String::operator==(const char* s) const
+{
+    return strlen(mData) == strlen(s) &&
+           strcmp(this->mData, s) == 0;
+}
+bool String::operator<(const String& other) const
+{
+    return strcmp(mData, other.mData) < 0;
+}
+bool String::operator>(const String& other) const
+{
+    return strcmp(mData, other.mData) > 0;
+}
 bool String::operator!=(const String& other) const
 {
     return !(*this == other);

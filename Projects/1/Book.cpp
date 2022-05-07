@@ -59,7 +59,16 @@ String Book::getISBN() const
 {
     return ISBN;
 }
-
+bool Book::operator==(const Book& other) const
+{
+    if (author == other.author && title == other.title && nameFale == other.nameFale && 
+    shortDescription == other.shortDescription && rating == other.rating && 
+    ISBN == other.ISBN)
+    {
+        return true;
+    }
+    return false;
+}
 void Book::print()
 {
     std::cout << author << std::endl;

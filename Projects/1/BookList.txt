@@ -1,0 +1,13 @@
+2
+Ivan Vazov
+Pod Igoto
+fileVazow.txt
+Za robstvoto
+4.5
+724-015-11-06
+Hristo Botew
+Borba
+fileBorba.txt
+Za borbata
+8.4
+435-5313-78-825

@@ -27,6 +27,7 @@ public:
     void erase();
 	bool isEmpty() const;
     
+    char* returnChar();
     void swap(String& other);
     String* substring(size_t start, size_t end) const; //returns a newly created object with the contents of the substring of the current string, starting from the start position and ending at the end position
 	
@@ -36,6 +37,9 @@ public:
     char& operator[](size_t); // returns an alias to the index character
     bool operator!=(const String&) const; // lexicographically checks whether the two strings are different
     bool operator==(const String&) const; // lexicographically checks whether the two strings are the same
+    bool operator==(const char* s) const;
+    bool operator<(const String&) const;
+    bool operator>(const String&) const;
 
     friend std::ostream& operator<<(std::ostream&, const String&);
     friend std::istream& operator>>(std::istream&, String&);
