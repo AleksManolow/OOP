@@ -25,8 +25,8 @@ public:
     double getRating() const;
     String getISBN() const;
 
-    void print();
-
+    void loadFromStream(std::istream& is);
+    void writeToStream(std::ostream& os);
     bool operator==(const Book&) const;
 
     friend std::istream& operator>>(std::istream& is, Book&);

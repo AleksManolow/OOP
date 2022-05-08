@@ -28,6 +28,8 @@ public:
 
     void sort();
     void find();
+    void add();
+    void remove();
 
 
 

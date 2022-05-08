@@ -5,11 +5,11 @@ TaskAdministrator::TaskAdministrator()
     booksFile = "BookList.txt";
     usersFile = "UserList.txt";
     char* temp = booksFile.returnChar();
-    std::ifstream books(temp, std::ios::in | std::ios::out);
+    std::fstream books(temp, std::ios::in | std::ios::out);
     books >> bookList;
     books.close();
     temp = usersFile.returnChar();
-    std::ifstream users(temp, std::ios::in | std::ios::out);
+    std::fstream users(temp, std::ios::in | std::ios::out);
     users >> userList;
     users.close();
 }
@@ -186,7 +186,7 @@ void TaskAdministrator::find()
         {
             if (bookList[i].getTitle() == input)
             {
-                std::cout << bookList[i];
+                bookList[i].writeToStream(std::cout);
                 notFound = false;
             }  
         }
@@ -204,7 +204,7 @@ void TaskAdministrator::find()
         {
             if (bookList[i].getAuthor() == input)
             {
-                std::cout << bookList[i];
+                bookList[i].writeToStream(std::cout);
                 notFound = false;
             }  
         }
@@ -222,7 +222,7 @@ void TaskAdministrator::find()
         {
             if (bookList[i].getISBN() == input)
             {
-                std::cout << bookList[i];
+                bookList[i].writeToStream(std::cout);
                 notFound = false;
             }  
         }
@@ -257,7 +257,7 @@ void TaskAdministrator::find()
             }
             if (isDescriptionFromBook)
             {
-                std::cout << bookList[i];
+                bookList[i].writeToStream(std::cout);
                 notFound = false;
             }
         }
@@ -270,6 +270,48 @@ void TaskAdministrator::find()
     {
         std::cerr << "Invalid criteria for finding the book!" << std::endl;
     }
+}
+void TaskAdministrator::add()
+{
+    Book newBook;
+    std::cout << "Enter which book you want to add!" << std::endl;
+    newBook.loadFromStream(std::cin);
+    bookList.pushBack(newBook);
+
+    char* temp = newBook.getNameFile().returnChar();
+    std::fstream textOfBook(temp, std::ios::in | std::ios::out);
+    //trqnwa da izmislq kak da procheta texta
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+}
+void TaskAdministrator::remove()
+{
+    Book removalBook;
+    std::cout << "Enter which book you want to remove!" << std::endl;
+    removalBook.loadFromStream(std::cin);
+    bool notFound = true;
+    int i = 0;
+    for (i ; i < bookList.getSize(); i++)
+    {
+        if (bookList[i] == removalBook)
+        {
+            notFound = false;
+            break;
+        }
+    }
+    if (notFound)
+    {
+        std::cout << "No such book has been found!"<< std::endl;
+    }
+    else
+    {
+        bookList.removeAt(i);
+
+        //remove and from the file
+        char* temp = booksFile.returnChar();
+        std::fstream books(temp, std::ios::in | std::ios::out | std::ios::trunc);
+        books << bookList;
+        books.close();
+    } 
 }
 void TaskAdministrator::TempPrint()
 {

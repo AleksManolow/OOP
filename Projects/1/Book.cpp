@@ -59,6 +59,37 @@ String Book::getISBN() const
 {
     return ISBN;
 }
+void Book::loadFromStream(std::istream& is)
+{
+    std::cout << "Enter author: ";
+    is >> author;
+    std::cout << "Enter title: ";
+    is >> title;
+    std::cout << "Enter fale name: ";
+    is >> nameFale;
+    std::cout << "Enter short description: ";
+    is >> shortDescription;
+    std::cout << "Enter rating: ";
+    is >> rating;
+    is.ignore();
+    std::cout << "Enter ISBN: ";
+    is >> ISBN;
+}
+void Book::writeToStream(std::ostream& os)
+{
+    std::cout << "Author: ";
+    os << author << '\n';
+    std::cout << "Title: ";
+    os << title << '\n';
+    std::cout << "Fale name: ";
+    os << nameFale << '\n';
+    std::cout << "Short description: ";
+    os << shortDescription << '\n';
+    std::cout << "Rating: ";
+    os << rating << '\n';
+    std::cout << "ISBN: ";
+    os << ISBN << '\n';
+}
 bool Book::operator==(const Book& other) const
 {
     if (author == other.author && title == other.title && nameFale == other.nameFale && 
@@ -68,15 +99,6 @@ bool Book::operator==(const Book& other) const
         return true;
     }
     return false;
-}
-void Book::print()
-{
-    std::cout << author << std::endl;
-    std::cout << title << std::endl;
-    std::cout << nameFale << std::endl;
-    std::cout << shortDescription << std::endl;
-    std::cout << rating << std::endl;
-    std::cout << ISBN << std::endl;
 }
 std::istream& operator>>(std::istream& is, Book& book)
 {

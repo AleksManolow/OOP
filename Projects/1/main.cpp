@@ -5,7 +5,9 @@ int main()
 {
     TaskAdministrator a;
     //a.sort();
-    a.find();
+    //a.find();
+    //a.add();
+    a.remove();
     //a.TempPrint();
 
 
