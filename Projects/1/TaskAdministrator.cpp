@@ -171,6 +171,106 @@ void TaskAdministrator::sort()
     }
     printSortListOfBook();
 }
+void TaskAdministrator::find()
+{
+    String input;
+    std::cout << "Select criteria for finding the book \"Title\", \"Author\", \"ISBN\" or \"Description\"." << std::endl;
+    std::cout << "Enter: ";
+    std::cin >> input;
+    if (input == "Title")
+    {
+        std::cout << "Enter Title: ";
+        std::cin >> input;
+        bool notFound = true;
+        for (int i = 0; i < bookList.getSize(); i++)
+        {
+            if (bookList[i].getTitle() == input)
+            {
+                std::cout << bookList[i];
+                notFound = false;
+            }  
+        }
+        if (notFound)
+        {
+            std::cout << "No book found!" << std::endl;
+        }
+    }
+    else if (input == "Author")
+    {
+        std::cout << "Enter Author: ";
+        std::cin >> input;
+        bool notFound = true;
+        for (int i = 0; i < bookList.getSize(); i++)
+        {
+            if (bookList[i].getAuthor() == input)
+            {
+                std::cout << bookList[i];
+                notFound = false;
+            }  
+        }
+        if (notFound)
+        {
+            std::cout << "No book found!" << std::endl;
+        }
+    }
+    else if (input == "ISBN")
+    {
+        std::cout << "Enter ISBN: ";
+        std::cin >> input;
+        bool notFound = true;
+        for (int i = 0; i < bookList.getSize(); i++)
+        {
+            if (bookList[i].getISBN() == input)
+            {
+                std::cout << bookList[i];
+                notFound = false;
+            }  
+        }
+        if (notFound)
+        {
+            std::cout << "No book found!" << std::endl;
+        }
+    }
+    else if (input == "Description")
+    {
+        std::cout << "Enter Description: ";
+        std::cin >> input;
+        bool notFound = true;
+        for (int i = 0; i < bookList.getSize(); i++)
+        {   
+            size_t inputLen = input.size();
+            String temp = bookList[i].getShortDescripion();
+            bool isDescriptionFromBook = false;
+            for (int j = 0; j < temp.size(); j++) 
+            {
+                for (int k = 0, p = j; k < inputLen; p++, k++)
+                {
+                    if (!(temp[p] == input[k] || temp[p] == (char)(input[k] - 32) || temp[p] == (char)(input[k] + 32)))
+                    {
+                        break;
+                    }
+                    if (k == inputLen - 1)
+                    {
+                        isDescriptionFromBook = true;
+                    }  
+                }
+            }
+            if (isDescriptionFromBook)
+            {
+                std::cout << bookList[i];
+                notFound = false;
+            }
+        }
+        if (notFound)
+        {
+            std::cout << "No book found!" << std::endl;
+        }
+    }
+    else
+    {
+        std::cerr << "Invalid criteria for finding the book!" << std::endl;
+    }
+}
 void TaskAdministrator::TempPrint()
 {
     std::cout << bookList;

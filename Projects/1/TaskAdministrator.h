@@ -27,6 +27,7 @@ public:
     TaskAdministrator();
 
     void sort();
+    void find();
 
 
 

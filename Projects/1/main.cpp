@@ -4,7 +4,8 @@
 int main()
 {
     TaskAdministrator a;
-    a.sort();
+    //a.sort();
+    a.find();
     //a.TempPrint();
 
 
