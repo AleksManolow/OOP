@@ -47,6 +47,10 @@ void User::readUser(std::istream& is)
     std::cout << std::endl;
     password = pass;
 }
+String User::getUsername()
+{
+    return username;
+}
 std::istream& operator>>(std::istream& is, User& user)
 {
     is >> user.username;

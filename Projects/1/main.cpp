@@ -6,10 +6,9 @@ int main()
     TaskAdministrator a;
     //a.sort();
     //a.find();
-    //a.add();
-    a.remove();
+    //a.addB();
+    //a.removeB();
     //a.TempPrint();
-
-
+    
     return 0;
 }

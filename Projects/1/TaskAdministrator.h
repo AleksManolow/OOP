@@ -5,6 +5,7 @@
 #include"Vector.h"
 #include"User.h"
 #include<fstream>
+#include<stdio.h>
 
 class TaskAdministrator
 {
@@ -23,24 +24,20 @@ private:
     void sortListOfBookByRatingDescendingOrder();
     void printSortListOfBook();
 
+    //function to check if the username and password are correct
+    bool isRegistered(User&);
+
 public:
     TaskAdministrator();
 
-    void sort();
-    void find();
-    void add();
-    void remove();
-
-
+    void sortB();
+    void findB();
+    void addB();
+    void removeB();
+    void outputB();
 
     void TempPrint();
 
 };
-
-
-
-
-
-
 
 #endif

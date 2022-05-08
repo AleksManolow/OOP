@@ -113,7 +113,7 @@ void TaskAdministrator::printSortListOfBook()
     }
     std::cout <<"--------------------" << std::endl;
 }
-void TaskAdministrator::sort()
+void TaskAdministrator::sortB()
 {
     String sortOrder;
     std::cout << "Select sort order \"Ascending\" or \"Descending\"." << std::endl;
@@ -171,7 +171,7 @@ void TaskAdministrator::sort()
     }
     printSortListOfBook();
 }
-void TaskAdministrator::find()
+void TaskAdministrator::findB()
 {
     String input;
     std::cout << "Select criteria for finding the book \"Title\", \"Author\", \"ISBN\" or \"Description\"." << std::endl;
@@ -271,47 +271,126 @@ void TaskAdministrator::find()
         std::cerr << "Invalid criteria for finding the book!" << std::endl;
     }
 }
-void TaskAdministrator::add()
+bool TaskAdministrator::isRegistered(User& u)
 {
-    Book newBook;
-    std::cout << "Enter which book you want to add!" << std::endl;
-    newBook.loadFromStream(std::cin);
-    bookList.pushBack(newBook);
-
-    char* temp = newBook.getNameFile().returnChar();
-    std::fstream textOfBook(temp, std::ios::in | std::ios::out);
-    //trqnwa da izmislq kak da procheta texta
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-}
-void TaskAdministrator::remove()
-{
-    Book removalBook;
-    std::cout << "Enter which book you want to remove!" << std::endl;
-    removalBook.loadFromStream(std::cin);
-    bool notFound = true;
-    int i = 0;
-    for (i ; i < bookList.getSize(); i++)
+    for (int i = 0; i < userList.getSize(); i++)
     {
-        if (bookList[i] == removalBook)
+        if (userList[i] == u)
         {
-            notFound = false;
-            break;
-        }
+            return true;
+        } 
     }
-    if (notFound)
+    return false;
+}
+void TaskAdministrator::addB()
+{   
+    User user;
+    String choice;
+    do
     {
-        std::cout << "No such book has been found!"<< std::endl;
-    }
-    else
-    {
-        bookList.removeAt(i);
+        user.readUser(std::cin);
+        if (isRegistered(user))
+        {
+            Book newBook;
+            std::cout << "Enter which book you want to add!" << std::endl;
+            newBook.loadFromStream(std::cin);
+            bookList.pushBack(newBook);
 
-        //remove and from the file
-        char* temp = booksFile.returnChar();
-        std::fstream books(temp, std::ios::in | std::ios::out | std::ios::trunc);
-        books << bookList;
-        books.close();
-    } 
+            char* temp = newBook.getNameFile().returnChar();
+            std::fstream textOfBook(temp, std::ios::in | std::ios::out | std::ios::trunc);
+
+            //trqnwa da izmislq kak da procheta texta
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //-------------------------
+            //---------------------
+            //-------------------------
+            //--------------------------
+
+            //add and from the file
+            temp = booksFile.returnChar();
+            std::fstream books(temp, std::ios::in | std::ios::out | std::ios::trunc);
+            books << bookList;
+            books.close();
+            std::cout << "The book has been added successfully! " << std::endl;
+        }
+        else
+        {
+            std::cout << "Login failed! "<< std::endl;
+            std::cout << "\"Try again\" or \"Come back\"!" << std::endl;
+            std::cout << "Enter: ";
+            std::cin >> choice;
+        }
+    } while (!(isRegistered(user)) && !(choice == "Come back"));
+
+}
+void TaskAdministrator::removeB()
+{
+    User user;
+    String choice;
+    do
+    {
+        user.readUser(std::cin);
+        if (isRegistered(user))
+        {
+            std::cout << "Hello, "<<  user.getUsername() << " login successful!" << std::endl;
+
+            Book removalBook;
+            std::cout << "Enter which book you want to remove!" << std::endl;
+            removalBook.loadFromStream(std::cin);
+            bool notFound = true;
+            int i = 0;
+            for (i ; i < bookList.getSize(); i++)
+            {
+                if (bookList[i] == removalBook)
+                {
+                    notFound = false;
+                    break;
+                }
+            }
+            if (notFound)
+            {
+                std::cout << "No such book has been found!"<< std::endl;
+            }
+            else
+            {
+                std::cout << "Whether to delete the file related to the book \"Yes\" or \"No\"?"<< std::endl;
+                String choice;
+                std::cin >> choice;
+                char* temp;
+                if (choice == "Yes")
+                {
+                    temp = bookList[i].getNameFile().returnChar();
+                    remove(temp);
+                }
+                bookList.removeAt(i);
+
+                //remove and from the file
+                temp = booksFile.returnChar();
+                std::fstream books(temp, std::ios::in | std::ios::out | std::ios::trunc);
+                books << bookList;
+                books.close();
+                std::cout << "The book has been removed successfully! " << std::endl;
+            } 
+        }
+        else
+        {
+            std::cout << "Login failed! "<< std::endl;
+            std::cout << "\"Try again\" or \"Come back\"!" << std::endl;
+            std::cout << "Enter: ";
+            std::cin >> choice;
+        }
+    } while (!(isRegistered(user)) && !(choice == "Come back"));
+}
+void TaskAdministrator::outputB()
+{
+    Book chooseBook;
+    std::cout << "Enter a book on which to display the text!" << std::endl;
+    chooseBook.loadFromStream(std::cin);
+    // -------------
+    // ---------------
+    // --------------
+    // ----------------
+
 }
 void TaskAdministrator::TempPrint()
 {

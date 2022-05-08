@@ -15,6 +15,7 @@ public:
     bool operator==(const User& other) const;
 
     void readUser(std::istream& is);
+    String getUsername();
 
     friend std::istream& operator>>(std::istream& is, User&);
     friend std::ostream& operator<<(std::ostream& os, const User&);
