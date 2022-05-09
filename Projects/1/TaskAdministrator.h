@@ -6,6 +6,9 @@
 #include"User.h"
 #include<fstream>
 #include<stdio.h>
+#include <thread>
+#include <chrono>
+using namespace std::chrono_literals;
 
 class TaskAdministrator
 {
@@ -35,8 +38,6 @@ public:
     void addB();
     void removeB();
     void outputB();
-
-    void TempPrint();
 
 };
 

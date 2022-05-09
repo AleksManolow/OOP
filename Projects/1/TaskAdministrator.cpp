@@ -296,19 +296,19 @@ void TaskAdministrator::addB()
             newBook.loadFromStream(std::cin);
             bookList.pushBack(newBook);
 
-            char* temp = newBook.getNameFile().returnChar();
-            std::fstream textOfBook(temp, std::ios::in | std::ios::out | std::ios::trunc);
-
-            //trqnwa da izmislq kak da procheta texta
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //-------------------------
-            //---------------------
-            //-------------------------
-            //--------------------------
+            //Entering the text of the book
+            std::fstream textOfBook(newBook.getNameFile().returnChar(), std::ios::in | std::ios::out | std::ios::trunc);
+            std::cout << "Enter the text of the book: " << std::endl;
+            String line;
+            std::cin >> line;
+            while (!(line == ""))
+            {
+                textOfBook << line;
+                std::cin >> line;
+            }
 
             //add and from the file
-            temp = booksFile.returnChar();
-            std::fstream books(temp, std::ios::in | std::ios::out | std::ios::trunc);
+            std::fstream books(booksFile.returnChar(), std::ios::in | std::ios::out | std::ios::trunc);
             books << bookList;
             books.close();
             std::cout << "The book has been added successfully! " << std::endl;
@@ -383,18 +383,59 @@ void TaskAdministrator::removeB()
 }
 void TaskAdministrator::outputB()
 {
-    Book chooseBook;
-    std::cout << "Enter a book on which to display the text!" << std::endl;
-    chooseBook.loadFromStream(std::cin);
-    // -------------
-    // ---------------
-    // --------------
-    // ----------------
+    String chooseBookTitle;
+    std::cout << "Enter a book title on which to display the text: ";
+    std::cin >> chooseBookTitle;
+    bool notFound = true;
+    int i = 0;
+    for (i = 0; i < bookList.getSize(); i++)
+    {
+        if (bookList[i].getTitle() == chooseBookTitle)
+        {
+            notFound = false;
+            break;
+        }  
+    }
+    
 
-}
-void TaskAdministrator::TempPrint()
-{
-    std::cout << bookList;
-    std::cout << "-------" << std::endl;
-    std::cout << userList;
+    if (notFound)
+    {
+        std::cout << "No book with this title was found!" << std::endl;
+    }
+    else
+    {
+        String line;
+        Vector<String> bookText;
+        std::fstream text(bookList[i].getNameFile().returnChar(), std::ios::in | std::ios::out);
+        text >> line;
+        while (!(line == ""))
+        {
+            bookText.pushBack(line);
+            text >> line;
+        }
+        int row = 0;
+        std::cout << "Enter how many rows: ";
+        std::cin >> row;
+        std::cin.ignore();
+
+        for (int i = 0; i < bookText.getSize();)
+        {
+            for (int j = 0; j < row, i < bookText.getSize(); j++, i++)
+            {
+                line = bookText[i];
+                for (int k = 0; k < line.size(); k++)
+                {
+
+                    std::cout << line[k];
+                    char temp = line[k];
+                    if ( temp == '!' || temp == '.' || temp == '?' || temp == ':' || temp == ';')
+                    {
+                        std::this_thread::sleep_for(300ms);
+                    }
+                }
+                std::cout << std::endl;
+            }
+            std::this_thread::sleep_for(3000ms);
+        }
+    }
 }
