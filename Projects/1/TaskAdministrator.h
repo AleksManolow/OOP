@@ -38,6 +38,7 @@ public:
     void addB();
     void removeB();
     void outputB();
+    void helpB();
 
 };
 

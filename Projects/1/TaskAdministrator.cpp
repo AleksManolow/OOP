@@ -303,7 +303,7 @@ void TaskAdministrator::addB()
             std::cin >> line;
             while (!(line == ""))
             {
-                textOfBook << line;
+                textOfBook << line << '\n';
                 std::cin >> line;
             }
 
@@ -438,4 +438,15 @@ void TaskAdministrator::outputB()
             std::this_thread::sleep_for(3000ms);
         }
     }
+}
+void TaskAdministrator::helpB()
+{
+    std::cout << "The following commands are supported :" << std::endl;
+    std::cout << "sort       sorts the list of books" << std::endl;
+    std::cout << "find       find a book on criteria" << std::endl;
+    std::cout << "add		 adds a book" << std::endl;
+    std::cout << "remove	 removes a book" << std::endl;
+    std::cout << "output	 displays the text of the book" << std::endl;
+    std::cout << "help		 prints this information" << std::endl;
+    std::cout << "exit		 exiting the program" << std::endl;  
 }
