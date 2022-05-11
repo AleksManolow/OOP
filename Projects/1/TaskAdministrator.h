@@ -29,7 +29,7 @@ private:
 
     //function to check if the username and password are correct
     bool isRegistered(User&);
-
+    
 public:
     TaskAdministrator();
 
@@ -38,8 +38,8 @@ public:
     void addB();
     void removeB();
     void outputB();
+    void saveB();
     void helpB();
-
 };
 
 #endif

@@ -306,11 +306,6 @@ void TaskAdministrator::addB()
                 textOfBook << line << '\n';
                 std::cin >> line;
             }
-
-            //add and from the file
-            std::fstream books(booksFile.returnChar(), std::ios::in | std::ios::out | std::ios::trunc);
-            books << bookList;
-            books.close();
             std::cout << "The book has been added successfully! " << std::endl;
         }
         else
@@ -363,12 +358,6 @@ void TaskAdministrator::removeB()
                     remove(temp);
                 }
                 bookList.removeAt(i);
-
-                //remove and from the file
-                temp = booksFile.returnChar();
-                std::fstream books(temp, std::ios::in | std::ios::out | std::ios::trunc);
-                books << bookList;
-                books.close();
                 std::cout << "The book has been removed successfully! " << std::endl;
             } 
         }
@@ -396,8 +385,6 @@ void TaskAdministrator::outputB()
             break;
         }  
     }
-    
-
     if (notFound)
     {
         std::cout << "No book with this title was found!" << std::endl;
@@ -439,6 +426,20 @@ void TaskAdministrator::outputB()
         }
     }
 }
+void TaskAdministrator::saveB()
+{
+    std::fstream books(booksFile.returnChar(), std::ios::in | std::ios::out | std::ios::trunc);
+    if (books)
+	{
+        books << bookList;
+        books.close();
+        std::cout << "Saving to file was successful!" << std::endl;
+	}
+	else
+	{
+		std::cout << "An error occurred while saving the file! Please enter new command!" << std::endl;
+	}
+}
 void TaskAdministrator::helpB()
 {
     std::cout << "The following commands are supported :" << std::endl;
@@ -448,5 +449,6 @@ void TaskAdministrator::helpB()
     std::cout << "remove	 removes a book" << std::endl;
     std::cout << "output	 displays the text of the book" << std::endl;
     std::cout << "help		 prints this information" << std::endl;
+    std::cout << "save       saves the books in the file list" << std::endl;
     std::cout << "exit		 exiting the program" << std::endl;  
 }

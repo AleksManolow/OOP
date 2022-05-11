@@ -12,7 +12,6 @@ public:
 
     void print();
     void start();
-    
 };
 
 #endif

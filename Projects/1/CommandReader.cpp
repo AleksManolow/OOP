@@ -7,6 +7,7 @@ CommandReader::CommandReader()
     commandsSet.pushBack("add");
 	commandsSet.pushBack("remove");
     commandsSet.pushBack("output");
+	commandsSet.pushBack("save");
     commandsSet.pushBack("help");
 	commandsSet.pushBack("exit");
 }
@@ -51,7 +52,8 @@ void CommandReader::start()
 			case 2: manager.addB(); break;
 			case 3: manager.removeB(); break;
 			case 4: manager.outputB(); break;
-			case 5: manager.helpB(); break;
+			case 5: manager.saveB(); break;
+			case 6: manager.helpB(); break;
 			default:
 				break;
 			}
