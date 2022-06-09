@@ -64,3 +64,18 @@ void Map::print() const
     }
     
 }
+std::istream& operator>>(std::istream& is, Map& sheet)
+{
+    is >> sheet.rows >> sheet.columns;
+
+
+    return is;
+}
+std::ostream& operator<<(std::ostream& os, const Map& sheet)
+{
+    os << sheet.rows << sheet.columns;
+    
+    
+
+    return os;
+}

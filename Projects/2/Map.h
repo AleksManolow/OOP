@@ -19,6 +19,9 @@ public:
     ~Map();
 
     void print() const;
+
+    friend std::istream& operator>>(std::istream& is, Map& );
+    friend std::ostream& operator<<(std::ostream& os, const Map& );
 };
 
 
