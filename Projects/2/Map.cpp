@@ -1,38 +1,38 @@
 #include"Map.h"
 char** Map::allocateMemory(int r, int c, char** rhs){
-	char** matrix = new char*[r];
+	char** m = new char*[r];
 	for (size_t i = 0; i < r; i++) {
-		matrix[i] = new char[c];
+		m[i] = new char[c];
 		for(size_t j = 0; j < c; j++) {
-			matrix[i][j] = rhs[i][j];
+			m[i][j] = rhs[i][j];
 		}
 	}
-	return matrix;
+	return m;
 }
 void Map::deleteMemory() {
 	for(size_t i = 0; i < rows; i++) {
-		delete[] map[i];
+		delete[] matrix[i];
 	}
-	delete[] map;
+	delete[] matrix;
 }
 
 Map::Map()
 {
     rows = 0;
     columns = 0;
-    map = NULL;
+    matrix = NULL;
 }
 Map::Map(int _rows, int _columns, char** _map)
 {
     rows = _rows;
     columns = _columns;
-    map = allocateMemory(_rows, _columns, _map);
+    matrix = allocateMemory(_rows, _columns, _map);
 }
 Map::Map(const Map& other)
 {
     rows = other.rows;
     columns = other.columns;
-    map = allocateMemory(other.rows, other.columns, other.map);
+    matrix = allocateMemory(other.rows, other.columns, other.matrix);
     
 }
 Map& Map::operator=(const Map& other)
@@ -43,7 +43,7 @@ Map& Map::operator=(const Map& other)
 
         rows = other.rows;
         columns = other.columns;
-        map = allocateMemory(other.rows, other.columns, other.map);
+        matrix = allocateMemory(other.rows, other.columns, other.matrix);
     }
 
     return *this;
@@ -58,7 +58,7 @@ void Map::print() const
     {
         for (int j = 0; j < columns; j++)
         {
-            std::cout << map[i][j] << ' ';
+            std::cout << matrix[i][j] << ' ';
         }
         std::cout << std::endl;
     }
@@ -67,15 +67,27 @@ void Map::print() const
 std::istream& operator>>(std::istream& is, Map& sheet)
 {
     is >> sheet.rows >> sheet.columns;
-
-
+    sheet.matrix = new char*[sheet.rows];
+	for (size_t i = 0; i < sheet.rows; i++) 
+    {
+		sheet.matrix[i] = new char[sheet.columns];
+		for(size_t j = 0; j < sheet.columns; j++) 
+        {
+			is >> sheet.matrix[i][j];
+		}
+	}
     return is;
 }
 std::ostream& operator<<(std::ostream& os, const Map& sheet)
 {
-    os << sheet.rows << sheet.columns;
-    
-    
-
+    os << sheet.rows << ' ' <<sheet.columns << '\n';
+    for (size_t i = 0; i < sheet.rows; i++) 
+    {
+		for(size_t j = 0; j < sheet.columns; j++) 
+        {
+			os << sheet.matrix[i][j] << ' ';
+		}
+        os << '\n';
+	}
     return os;
 }

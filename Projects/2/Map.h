@@ -7,7 +7,7 @@ class Map
 private:
     int rows;
     int columns;
-    char** map;
+    char** matrix;
 
     char** allocateMemory(int r, int c, char** rhs);
     void deleteMemory();
