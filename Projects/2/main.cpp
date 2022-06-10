@@ -1,8 +1,7 @@
 #include<iostream>
-#include"Map.h"
+#include<string>
 int main()
 {
-
     
     return 0;
 }

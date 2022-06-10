@@ -6,6 +6,7 @@ class Armor:public Treasure
 {
 public:
     Armor();
+    Armor(double _percent, std::string _name);
 
     virtual void print()const;
 };
