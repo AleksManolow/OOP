@@ -52,6 +52,29 @@ Map::~Map()
 {
     deleteMemory();
 }
+char** Map::getMatrix() const
+{
+    return matrix;
+}
+char Map::getAt(size_t i, size_t j) const
+{
+    return matrix[i][j];
+}
+
+void Map::setMatrix(char** _matrix)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            matrix[i][j] = matrix[j][i];
+        }
+    }
+}
+void Map::setAt(size_t i, size_t j, char c)
+{
+    matrix[i][j] = c;
+}
 void Map::print() const
 {
     for (int i = 0; i < rows; i++)
@@ -62,7 +85,6 @@ void Map::print() const
         }
         std::cout << std::endl;
     }
-    
 }
 std::istream& operator>>(std::istream& is, Map& sheet)
 {

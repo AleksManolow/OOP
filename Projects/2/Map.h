@@ -18,6 +18,12 @@ public:
     Map& operator=(const Map& );
     ~Map();
 
+	char** getMatrix() const;
+	char getAt(size_t, size_t) const;
+
+    void setMatrix(char** );
+	void setAt(size_t , size_t , char );
+
     void print() const;
 
     friend std::istream& operator>>(std::istream& is, Map& );
