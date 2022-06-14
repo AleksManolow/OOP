@@ -6,9 +6,12 @@ class Armor:public Treasure
 {
 public:
     Armor();
-    Armor(double _percent, std::string _name);
+    Armor(double _percent, String _name);
 
     virtual void print()const;
+    
+    void loadFromStream(std::istream& in);
+    void writeToStream(std::ostream& out);
 };
 
 #endif

@@ -98,6 +98,38 @@ std::istream& operator>>(std::istream& is, Map& sheet)
 			is >> sheet.matrix[i][j];
 		}
 	}
+    int size = 0;
+    is >> size;
+    for (size_t i = 0; i < size; i++)
+    {
+        Monster temp;
+        temp.loadFromStream(is);
+        sheet.monsters.push_back(temp);
+    }
+    is >> size;
+    for (size_t i = 0; i < size; i++)
+    {
+        std::string nameTreasure;
+        is >> nameTreasure;
+        if (nameTreasure == "Spell")
+        {
+            Treasure* temp = new Spell();
+            temp->loadFromStream(is);
+            sheet.treasures.push_back(temp);
+        }
+        else if (nameTreasure == "Weapon")
+        {
+            Treasure* temp = new Weapon();
+            temp->loadFromStream(is);
+            sheet.treasures.push_back(temp);
+        }
+        else if (nameTreasure == "Armor")
+        {
+            Treasure* temp = new Armor();
+            temp->loadFromStream(is);
+            sheet.treasures.push_back(temp);
+        }
+    }
     return is;
 }
 std::ostream& operator<<(std::ostream& os, const Map& sheet)
@@ -111,5 +143,17 @@ std::ostream& operator<<(std::ostream& os, const Map& sheet)
 		}
         os << '\n';
 	}
+
+    os << sheet.monsters.size() << '\n';
+    for (size_t i = 0; i < sheet.monsters.size(); i++)
+    {
+        sheet.monsters[i].writeToStream(os);
+    }
+    os << sheet.treasures.size() << '\n';
+    for (size_t i = 0; i < sheet.treasures.size(); i++)
+    {
+        sheet.treasures[i]->writeToStream(os);
+    }
+
     return os;
 }

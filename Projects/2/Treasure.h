@@ -2,25 +2,27 @@
 #define Treasure_H
 
 #include<iostream>
-#include<string>
+#include"String.h"
 
 class Treasure
 {
 private:
     double percent; 
-    std::string name;
+    String name;
 public:
     Treasure();
-    Treasure(double _percent, std::string _name);
+    Treasure(double _percent, String _name);
     virtual ~Treasure() = default;
 
     double getPercent() const;
-    std::string getName() const;
+    String getName() const;
 
     void setPercent(double _percent);
-    void setName(std::string _name);
+    void setName(String _name);
 
     virtual void print() const;
+    virtual void loadFromStream(std::istream& in);
+    virtual void writeToStream(std::ostream& out);
 
 };
 

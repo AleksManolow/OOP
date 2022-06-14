@@ -8,6 +8,9 @@ public:
     Weapon();
 
     virtual void print() const;
+
+    void loadFromStream(std::istream& in);
+    void writeToStream(std::ostream& out);
 };
 
 

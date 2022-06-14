@@ -1,6 +1,12 @@
 #ifndef __MAP_H
 #define __MAP_H
 #include<iostream>
+#include<vector>
+#include"Treasure.h"
+#include"Armor.h"
+#include"Weapon.h"
+#include"Spell.h"
+#include"Monster.h"
 
 class Map
 {
@@ -8,6 +14,8 @@ private:
     int rows;
     int columns;
     char** matrix;
+    std::vector<Monster > monsters;
+    std::vector<Treasure* > treasures;
 
     char** allocateMemory(int r, int c, char** rhs);
     void deleteMemory();

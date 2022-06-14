@@ -15,3 +15,18 @@ void Monster::print() const
     armor.print();
     std::cout << "-------------------------" << std::endl;
 }
+void Monster::loadFromStream(std::istream& in)
+{
+    in >> force;
+    in >> mana;
+    in >> health;
+    armor.loadFromStream(in);
+}
+void Monster::writeToStream(std::ostream& out) const
+{
+    out << force << '\n';
+    out << mana << '\n';
+    out << health << '\n';
+    out << armor.getPercent() << '\n';\
+    out << armor.getName() << '\n';
+}

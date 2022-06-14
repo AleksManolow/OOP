@@ -13,6 +13,9 @@ private:
 public:
     Monster();
     void print() const;
+
+    void loadFromStream(std::istream& in);
+    void writeToStream(std::ostream& out) const;
 };
 
 
