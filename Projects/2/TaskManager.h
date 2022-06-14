@@ -13,21 +13,32 @@
 #include"Weapon.h"
 #include"Spell.h"
 #include"Monster.h"
-#include"Map.h"
+#include"GenerateMap.h"
 #include"CommandReader.h"
 #include"String.h"
+#include"CoordinatesHero.h"
 
 class TaskManager
 {
 private:
     String nameFile;
     Hero* hero;
+    CoordinatesHero coordinates;
     int level;
-    Map map;
+    GenerateMap GenerateMap;
 
 public:
     TaskManager();
-    ~TaskManager();
+    void openFile();
+    // void up();
+    // void down();
+    // void left();
+    // void right();
+    void start()
+    void saveAsFile();
+    void saveFile();
+    void closeFile();
+    void help();
 };
 
 #endif

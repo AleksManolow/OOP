@@ -1,11 +1,12 @@
 #include<iostream>
 #include<string>
 #include<fstream>
-#include"Map.h"
+#include"GenerateMap.h"
+#include"CoordinatesHero.h"
 int main()
 {
-    std::fstream listOfProperties("textF.txt", std::ios::in | std::ios::out);
-    Map a;
+    std::fstream listOfProperties("Level1.txt", std::ios::in | std::ios::out);
+    GenerateMap a;
     listOfProperties >> a;
     std::cout << a;
 

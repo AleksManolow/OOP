@@ -1,5 +1,5 @@
-#include"Map.h"
-char** Map::allocateMemory(int r, int c, char** rhs){
+#include"GenerateMap.h"
+char** GenerateMap::allocateMemory(int r, int c, char** rhs){
 	char** m = new char*[r];
 	for (size_t i = 0; i < r; i++) {
 		m[i] = new char[c];
@@ -9,33 +9,33 @@ char** Map::allocateMemory(int r, int c, char** rhs){
 	}
 	return m;
 }
-void Map::deleteMemory() {
+void GenerateMap::deleteMemory() {
 	for(size_t i = 0; i < rows; i++) {
 		delete[] matrix[i];
 	}
 	delete[] matrix;
 }
 
-Map::Map()
+GenerateMap::GenerateMap()
 {
     rows = 0;
     columns = 0;
     matrix = NULL;
 }
-Map::Map(int _rows, int _columns, char** _map)
+GenerateMap::GenerateMap(int _rows, int _columns, char** _GenerateMap)
 {
     rows = _rows;
     columns = _columns;
-    matrix = allocateMemory(_rows, _columns, _map);
+    matrix = allocateMemory(_rows, _columns, _GenerateMap);
 }
-Map::Map(const Map& other)
+GenerateMap::GenerateMap(const GenerateMap& other)
 {
     rows = other.rows;
     columns = other.columns;
     matrix = allocateMemory(other.rows, other.columns, other.matrix);
     
 }
-Map& Map::operator=(const Map& other)
+GenerateMap& GenerateMap::operator=(const GenerateMap& other)
 {
     if (this != &other)
     {
@@ -48,20 +48,20 @@ Map& Map::operator=(const Map& other)
 
     return *this;
 }
-Map::~Map()
+GenerateMap::~GenerateMap()
 {
     deleteMemory();
 }
-char** Map::getMatrix() const
+char** GenerateMap::getMatrix() const
 {
     return matrix;
 }
-char Map::getAt(size_t i, size_t j) const
+char GenerateMap::getAt(size_t i, size_t j) const
 {
     return matrix[i][j];
 }
 
-void Map::setMatrix(char** _matrix)
+void GenerateMap::setMatrix(char** _matrix)
 {
     for (int i = 0; i < rows; i++)
     {
@@ -71,11 +71,11 @@ void Map::setMatrix(char** _matrix)
         }
     }
 }
-void Map::setAt(size_t i, size_t j, char c)
+void GenerateMap::setAt(size_t i, size_t j, char c)
 {
     matrix[i][j] = c;
 }
-void Map::print() const
+void GenerateMap::print() const
 {
     for (int i = 0; i < rows; i++)
     {
@@ -86,7 +86,7 @@ void Map::print() const
         std::cout << std::endl;
     }
 }
-std::istream& operator>>(std::istream& is, Map& sheet)
+std::istream& operator>>(std::istream& is, GenerateMap& sheet)
 {
     is >> sheet.rows >> sheet.columns;
     sheet.matrix = new char*[sheet.rows];
@@ -132,7 +132,7 @@ std::istream& operator>>(std::istream& is, Map& sheet)
     }
     return is;
 }
-std::ostream& operator<<(std::ostream& os, const Map& sheet)
+std::ostream& operator<<(std::ostream& os, const GenerateMap& sheet)
 {
     os << sheet.rows << ' ' <<sheet.columns << '\n';
     for (size_t i = 0; i < sheet.rows; i++) 
