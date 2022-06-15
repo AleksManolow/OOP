@@ -34,7 +34,9 @@ public:
     void setArrmor(Armor& );
     void setWeapon(Weapon& );
     void setSpell(Spell& );
-    
+
+    virtual void loadFromStream(std::istream& in);
+    virtual void writeToStream(std::ostream& out) const; 
 };
 
 

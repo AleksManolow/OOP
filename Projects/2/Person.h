@@ -8,6 +8,9 @@ public:
     Person();
 
     virtual void print() const;
+
+    virtual void loadFromStream(std::istream& in);
+    virtual void writeToStream(std::ostream& out) const; 
 };
 
 

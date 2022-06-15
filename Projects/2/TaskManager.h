@@ -2,7 +2,7 @@
 #define __TASKMANAGER_H
 
 #include<iostream>
-#include<string>
+#include<fstream>
 #include<vector>
 #include"Hero.h"
 #include"Mag.h"
@@ -21,24 +21,44 @@
 class TaskManager
 {
 private:
+    std::fstream file;
     String nameFile;
     Hero* hero;
     CoordinatesHero coordinates;
     int level;
-    GenerateMap GenerateMap;
+    GenerateMap map;
 
+    //flags whether there is an open and close file
+    bool isReadFromOpenFile;
+    bool isCloseFile;
+
+    //indicates whether the game is saved in a file
+    bool isSavedInFile;
+
+    //HELP FUNCTIONS
+
+    //streaming read and write features
+
+
+
+    //
 public:
     TaskManager();
+    ~TaskManager();
+    //command functions
     void openFile();
     // void up();
     // void down();
     // void left();
     // void right();
-    void start()
     void saveAsFile();
     void saveFile();
     void closeFile();
     void help();
+    void exit();
+
+    void loadFromStream(std::istream& in);
+    void writeToStream(std::ostream& out) const;
 };
 
 #endif

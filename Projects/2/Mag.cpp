@@ -11,3 +11,12 @@ void Mag::print() const
     Hero::print();
     std::cout << "-------------------------" << std::endl;
 }
+void Mag::loadFromStream(std::istream& in)
+{
+    Hero::loadFromStream(in);
+}
+void Mag::writeToStream(std::ostream& out) const
+{
+    out << "Mag" << '\n';
+    Hero::writeToStream(out);
+}

@@ -33,6 +33,8 @@ GenerateMap::GenerateMap(const GenerateMap& other)
     rows = other.rows;
     columns = other.columns;
     matrix = allocateMemory(other.rows, other.columns, other.matrix);
+    monsters = other.monsters;
+    treasures = other.treasures;
     
 }
 GenerateMap& GenerateMap::operator=(const GenerateMap& other)
@@ -40,10 +42,17 @@ GenerateMap& GenerateMap::operator=(const GenerateMap& other)
     if (this != &other)
     {
         deleteMemory();
+        for (int i = 0; i < treasures.size(); i++)
+        {
+            delete treasures[i];
+        }
 
         rows = other.rows;
         columns = other.columns;
         matrix = allocateMemory(other.rows, other.columns, other.matrix);
+
+        monsters = other.monsters;
+        treasures = other.treasures;
     }
 
     return *this;
@@ -51,6 +60,10 @@ GenerateMap& GenerateMap::operator=(const GenerateMap& other)
 GenerateMap::~GenerateMap()
 {
     deleteMemory();
+    for (int i = 0; i < treasures.size(); i++)
+    {
+        delete treasures[i];
+    }
 }
 char** GenerateMap::getMatrix() const
 {

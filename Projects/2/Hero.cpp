@@ -66,3 +66,24 @@ void Hero::setSpell(Spell& _spell)
 {
     spell = _spell;
 }
+void Hero::loadFromStream(std::istream& in)
+{
+    in >> force;
+    in >> mana;
+    in >> health;
+    armor.loadFromStream(in);
+    weapon.loadFromStream(in);
+    spell.loadFromStream(in);
+}
+void Hero::writeToStream(std::ostream& out) const
+{
+    out << force << '\n';
+    out << mana << '\n';
+    out << health << '\n';
+    out << armor.getPercent() << '\n';\
+    out << armor.getName() << '\n';
+    out << weapon.getPercent() << '\n';\
+    out << weapon.getName() << '\n';
+    out << spell.getPercent() << '\n';\
+    out << spell.getName() << '\n';
+}
