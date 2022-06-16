@@ -26,6 +26,8 @@ public:
     GenerateMap& operator=(const GenerateMap& );
     ~GenerateMap();
 
+    int getRows(){   return rows;    }
+    int getColumns(){   return columns;    }
 	char** getMatrix() const;
 	char getAt(size_t, size_t) const;
 

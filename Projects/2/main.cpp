@@ -12,7 +12,8 @@ int main()
     // std::cout << a;
     TaskManager a;
     a.openFile();
-    a.saveFile();
+    a.printHeroAndMap();
+    a.up();
     //a.writeToStream(std::cout);
 
     return 0;

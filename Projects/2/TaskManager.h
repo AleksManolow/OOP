@@ -38,27 +38,35 @@ private:
     //HELP FUNCTIONS
 
     //streaming read and write features
+    void loadFromStream(std::istream& in);
+    void writeToStream(std::ostream& out) const;
 
+    //on-screen printing features
+    
 
+    //movement on the playing field
+    bool thisMovementIsNotPossible(int x, int y);
 
-    //
+    //playGame
+    void playGame(int x, int y);
 public:
     TaskManager();
     ~TaskManager();
     //command functions
     void openFile();
-    // void up();
-    // void down();
-    // void left();
-    // void right();
+    void up();
+    void down();
+    void left();
+    void right();
     void saveAsFile();
     void saveFile();
     void closeFile();
     void help();
     void exit();
 
-    void loadFromStream(std::istream& in);
-    void writeToStream(std::ostream& out) const;
+
+
+    void printHeroAndMap();
 };
 
 #endif

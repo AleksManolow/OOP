@@ -15,21 +15,21 @@
 # . . . . . . . . #
 # # # . # # # # . .
 3
-11
-16
-13
-10
-shtit
-12
+25
+25
+30
 15
-16
-20
-bariera
-10
-18
-12
-20
-zashtitna cherupak
+Lyspite
+25
+25
+30
+15
+Lyspite
+25
+25
+30
+15
+Lyspite
 2
 Spell
 30

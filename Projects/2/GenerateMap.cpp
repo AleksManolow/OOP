@@ -90,6 +90,7 @@ void GenerateMap::setAt(size_t i, size_t j, char c)
 }
 void GenerateMap::print() const
 {
+    std::cout << "PLAYGROUND" << std::endl;
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < columns; j++)

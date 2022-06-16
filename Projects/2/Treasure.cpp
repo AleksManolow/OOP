@@ -27,7 +27,7 @@ void Treasure::setName(String _name)
 }
 void Treasure::print() const
 {
-    std::cout << name << ' ' << percent << '%' << std::endl;
+    std::cout << "Name-"<< name << ' ' << "Percent-" << percent << '%' << std::endl;
 }
 void Treasure::loadFromStream(std::istream& in)
 {

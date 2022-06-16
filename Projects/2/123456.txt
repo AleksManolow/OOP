@@ -1,0 +1,13 @@
+Warrior
+40
+10
+50
+0
+
+20
+Obiknowen mech
+20
+Ognena topka
+0
+0
+1

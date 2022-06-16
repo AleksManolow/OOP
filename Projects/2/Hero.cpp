@@ -9,6 +9,7 @@ Hero::Hero(double _forse , double _mana, double _health):armor(), weapon(), spel
 }
 void Hero::print() const
 {
+    std::cout << "Indicators of the hero!" << std::endl;
     std::cout << "Forse:"<< force << std::endl;
     std::cout << "Mana:"<< mana << std::endl;
     std::cout << "Health:" << health << std::endl;
