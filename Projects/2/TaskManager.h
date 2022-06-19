@@ -49,6 +49,9 @@ private:
 
     //playGame
     void playGame(int x, int y);
+
+    // battle with monsters
+    bool battleWithMonsterIsVictory(int );
 public:
     TaskManager();
     ~TaskManager();
@@ -63,8 +66,6 @@ public:
     void closeFile();
     void help();
     void exit();
-
-
 
     void printHeroAndMap();
 };

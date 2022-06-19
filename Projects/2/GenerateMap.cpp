@@ -73,7 +73,14 @@ char GenerateMap::getAt(size_t i, size_t j) const
 {
     return matrix[i][j];
 }
-
+Monster GenerateMap::getAtMonster(size_t i) const
+{
+    return monsters[i];
+}
+Treasure* GenerateMap::getAtTreasure(size_t t) const
+{   
+    return treasures[t];
+}
 void GenerateMap::setMatrix(char** _matrix)
 {
     for (int i = 0; i < rows; i++)
@@ -100,16 +107,106 @@ void GenerateMap::print() const
         std::cout << std::endl;
     }
 }
-std::istream& operator>>(std::istream& is, GenerateMap& sheet)
+void GenerateMap::increasePerformanceOfMonster(int level)
 {
-    is >> sheet.rows >> sheet.columns;
-    sheet.matrix = new char*[sheet.rows];
-	for (size_t i = 0; i < sheet.rows; i++) 
+    for (int i = 0; i < monsters.size(); i++)
     {
-		sheet.matrix[i] = new char[sheet.columns];
-		for(size_t j = 0; j < sheet.columns; j++) 
+        monsters[i].setForse(monsters[i].getForse() + ((level - 1) * 10));
+        monsters[i].setMana(monsters[i].getMana() + ((level - 1) * 10));
+        monsters[i].setHealth(monsters[i].getHealth() + ((level - 1) * 10));
+
+        monsters[i].getArrmor().setPercent(monsters[i].getArrmor().getPercent() + ((level - 1) * 5));
+    }
+    
+}
+// std::istream& operator>>(std::istream& is, GenerateMap& sheet)
+// {
+//     is >> sheet.rows >> sheet.columns;
+//     sheet.matrix = new char*[sheet.rows];
+// 	for (size_t i = 0; i < sheet.rows; i++) 
+//     {
+// 		sheet.matrix[i] = new char[sheet.columns];
+// 		for(size_t j = 0; j < sheet.columns; j++) 
+//         {
+// 			is >> sheet.matrix[i][j];
+// 		}
+// 	}
+//     int size = 0;
+//     is >> size;
+//     for (size_t i = 0; i < size; i++)
+//     {
+//         Monster temp;
+//         temp.loadFromStream(is);
+//         sheet.monsters.push_back(temp);
+//     }
+//     is >> size;
+//     for (size_t i = 0; i < size; i++)
+//     {
+//         std::string nameTreasure;
+//         is >> nameTreasure;
+//         if (nameTreasure == "Spell")
+//         {
+//             Treasure* temp = new Spell();
+//             temp->loadFromStream(is);
+//             sheet.treasures.push_back(temp);
+//         }
+//         else if (nameTreasure == "Weapon")
+//         {
+//             Treasure* temp = new Weapon();
+//             temp->loadFromStream(is);
+//             sheet.treasures.push_back(temp);
+//         }
+//         else if (nameTreasure == "Armor")
+//         {
+//             Treasure* temp = new Armor();
+//             temp->loadFromStream(is);
+//             sheet.treasures.push_back(temp);
+//         }
+//     }
+//     return is;
+// }
+// std::ostream& operator<<(std::ostream& os, const GenerateMap& sheet)
+// {
+//     os << sheet.rows << ' ' <<sheet.columns << '\n';
+//     for (size_t i = 0; i < sheet.rows; i++) 
+//     {
+// 		for(size_t j = 0; j < sheet.columns; j++) 
+//         {
+// 			os << sheet.matrix[i][j] << ' ';
+// 		}
+//         os << '\n';
+// 	}
+
+//     os << sheet.monsters.size() << '\n';
+//     for (size_t i = 0; i < sheet.monsters.size(); i++)
+//     {
+//         sheet.monsters[i].writeToStream(os);
+//     }
+//     os << sheet.treasures.size() << '\n';
+//     for (size_t i = 0; i < sheet.treasures.size(); i++)
+//     {
+//         sheet.treasures[i]->writeToStream(os);
+//     }
+
+//     return os;
+// }
+void GenerateMap::loadFromStream(std::istream& is)
+{
+    deleteMemory();
+    for (int i = 0; i < treasures.size(); i++)
+    {
+        delete treasures[i];
+    }
+    treasures.clear();
+    monsters.clear();
+    is >> rows >> columns;
+    matrix = new char*[rows];
+	for (size_t i = 0; i < rows; i++) 
+    {
+		matrix[i] = new char[columns];
+		for(size_t j = 0; j < columns; j++) 
         {
-			is >> sheet.matrix[i][j];
+			is >> matrix[i][j];
 		}
 	}
     int size = 0;
@@ -118,7 +215,7 @@ std::istream& operator>>(std::istream& is, GenerateMap& sheet)
     {
         Monster temp;
         temp.loadFromStream(is);
-        sheet.monsters.push_back(temp);
+        monsters.push_back(temp);
     }
     is >> size;
     for (size_t i = 0; i < size; i++)
@@ -129,45 +226,42 @@ std::istream& operator>>(std::istream& is, GenerateMap& sheet)
         {
             Treasure* temp = new Spell();
             temp->loadFromStream(is);
-            sheet.treasures.push_back(temp);
+            treasures.push_back(temp);
         }
         else if (nameTreasure == "Weapon")
         {
             Treasure* temp = new Weapon();
             temp->loadFromStream(is);
-            sheet.treasures.push_back(temp);
+            treasures.push_back(temp);
         }
         else if (nameTreasure == "Armor")
         {
             Treasure* temp = new Armor();
             temp->loadFromStream(is);
-            sheet.treasures.push_back(temp);
+            treasures.push_back(temp);
         }
     }
-    return is;
 }
-std::ostream& operator<<(std::ostream& os, const GenerateMap& sheet)
+void GenerateMap::writeToStream(std::ostream& os) const
 {
-    os << sheet.rows << ' ' <<sheet.columns << '\n';
-    for (size_t i = 0; i < sheet.rows; i++) 
+    os << rows << ' ' <<columns << '\n';
+    for (size_t i = 0; i < rows; i++) 
     {
-		for(size_t j = 0; j < sheet.columns; j++) 
+		for(size_t j = 0; j < columns; j++) 
         {
-			os << sheet.matrix[i][j] << ' ';
+			os << matrix[i][j] << ' ';
 		}
         os << '\n';
 	}
 
-    os << sheet.monsters.size() << '\n';
-    for (size_t i = 0; i < sheet.monsters.size(); i++)
+    os << monsters.size() << '\n';
+    for (size_t i = 0; i < monsters.size(); i++)
     {
-        sheet.monsters[i].writeToStream(os);
+        monsters[i].writeToStream(os);
     }
-    os << sheet.treasures.size() << '\n';
-    for (size_t i = 0; i < sheet.treasures.size(); i++)
+    os << treasures.size() << '\n';
+    for (size_t i = 0; i < treasures.size(); i++)
     {
-        sheet.treasures[i]->writeToStream(os);
+        treasures[i]->writeToStream(os);
     }
-
-    return os;
 }

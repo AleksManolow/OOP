@@ -30,14 +30,21 @@ public:
     int getColumns(){   return columns;    }
 	char** getMatrix() const;
 	char getAt(size_t, size_t) const;
+    Monster getAtMonster(size_t ) const;
+    Treasure* getAtTreasure(size_t ) const;
 
     void setMatrix(char** );
 	void setAt(size_t , size_t , char );
 
     void print() const;
 
-    friend std::istream& operator>>(std::istream& is, GenerateMap& );
-    friend std::ostream& operator<<(std::ostream& os, const GenerateMap& );
+    void increasePerformanceOfMonster(int level);
+
+    //friend std::istream& operator>>(std::istream& is, GenerateMap& );
+    //friend std::ostream& operator<<(std::ostream& os, const GenerateMap& );
+
+    void loadFromStream(std::istream& in);
+    void writeToStream(std::ostream& out) const;
 };
 
 

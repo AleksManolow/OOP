@@ -8,6 +8,6 @@ Warrior
 Obiknowen mech
 20
 Ognena topka
-0
-0
+8
+9
 1

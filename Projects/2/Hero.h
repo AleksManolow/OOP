@@ -31,9 +31,9 @@ public:
     void setForse(double );
     void setMana(double );
     void setHealth(double );
-    void setArrmor(Armor& );
-    void setWeapon(Weapon& );
-    void setSpell(Spell& );
+    void setArrmor(Treasure* );
+    void setWeapon(Treasure* );
+    void setSpell(Treasure* );
 
     virtual void loadFromStream(std::istream& in);
     virtual void writeToStream(std::ostream& out) const; 

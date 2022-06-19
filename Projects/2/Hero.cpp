@@ -55,17 +55,20 @@ void Hero::setHealth(double _health)
 {
     health = _health;
 }
-void Hero::setArrmor(Armor& _armor)
+void Hero::setArrmor(Treasure* _armor)
 {
-    armor = _armor;
+    armor.setName(_armor->getName());
+    armor.setPercent(_armor->getPercent());
 }
-void Hero::setWeapon(Weapon& _weapon)
+void Hero::setWeapon(Treasure* _weapon)
 {
-    weapon = _weapon;
+    weapon.setName(_weapon->getName());
+    weapon.setPercent(_weapon->getPercent());
 }
-void Hero::setSpell(Spell& _spell)
+void Hero::setSpell(Treasure* _spell)
 {
-    spell = _spell;
+    spell.setName(_spell->getName());
+    spell.setPercent(_spell->getPercent());
 }
 void Hero::loadFromStream(std::istream& in)
 {

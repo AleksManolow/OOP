@@ -36,10 +36,9 @@ void TaskManager::loadFromStream(std::istream& in)
         fileNameMap = "Level4.txt";
         break;
     }
-    GenerateMap tempMap;
+
     std::fstream listOfProperties(fileNameMap.returnChar(), std::ios::in | std::ios::out);
-    listOfProperties >> tempMap;
-    map = tempMap;
+    map.loadFromStream(listOfProperties);
 }
 void TaskManager::writeToStream(std::ostream& out) const
 {
@@ -60,6 +59,44 @@ bool TaskManager::thisMovementIsNotPossible(int x, int y)
     }
     return false;
 }
+bool TaskManager::battleWithMonsterIsVictory(int numberOfMonster)
+{
+    Monster monsterInBattle = map.getAtMonster(numberOfMonster);
+    double heroHealth = hero->getHealth();
+
+    while(monsterInBattle.getHealth() < 0 && hero->getHealth() < 0)
+    {
+        String choise;
+        std::cout << "Choose whether to hit the monster with a \"Power attack\" or by \"Casting a spell\"!" << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> choise;
+        if (choise == "Power attack")
+        {
+            double damage = monsterInBattle.getHealth() - hero->getForse();  
+            monsterInBattle.setHealth();
+        }
+        else if (choise == "Casting a spell")
+        {
+            onsterInBattle.setHealth();
+        }
+        else
+        {
+            std::cout << "Envalid choice" << std::endl;
+        }
+        
+        hero->setHealth();
+    }
+
+    if (hero->getHealth() > 0)
+    {
+        hero->setHealth(hero->getHealth() + (heroHealth - hero->getHealth() / 2));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 void TaskManager::playGame(int x, int y)
 {
     if (thisMovementIsNotPossible(x, y))
@@ -68,12 +105,66 @@ void TaskManager::playGame(int x, int y)
     }
     else
     {
-        ////
+        static int countM = 0;
+        static int countT = 0;
+
+        if (map.getAt(x, y) == 'M')
+        {
+            
+            if (battleWithMonsterIsVictory(countM))
+            {
+                std::cout << "You successfully defeated this monster!" << std::endl;
+                map.setAt(x ,y ,'.');
+            }
+            else
+            {
+                std::cout << "You lost the battle with the monster!" << std::endl;
+            }
+        }
+        
+        if (map.getAt(x, y) == 'T')
+        {
+
+            std::cout << "You came across a treasure. Will he keep it?" << std::endl;
+            map.getAtTreasure(countT)->print();
+            String choice;
+            std::cout << "Enter \"Yes\" ot \"No\": ";
+            std::cin >> choice;
+            if (choice == "Yes")
+            {
+                if (typeid(*map.getAtTreasure(countT)) == typeid(Armor))
+                {
+                    hero->setArrmor(map.getAtTreasure(countT));
+                    std::cout << "The treasure was taken successfully!" << std::endl;
+                }
+                else if (typeid(*map.getAtTreasure(countT)) == typeid(Weapon))
+                {
+                    hero->setWeapon(map.getAtTreasure(countT));
+                    std::cout << "The treasure was taken successfully!" << std::endl;
+                }
+                else if (typeid(*map.getAtTreasure(countT)) == typeid(Spell))
+                {
+                    hero->setSpell(map.getAtTreasure(countT));
+                    std::cout << "The treasure was taken successfully!" << std::endl;
+                } 
+                else  
+                {
+                    std::cout << "Unsuccessful retrieval of the treasure!" << std::endl;
+                }
+                map.setAt(x ,y ,'.');
+            }
+            else if(choice == "No")
+            {
+                std::cout << "You did not take the treasure!" << std::endl;
+            }
+            else
+            {
+                std::cout << "Invalid choice!" << std::endl;
+            }     
+        }
 
 
-
-
-        if (x == map.getRows() && y == map.getColumns())
+        if (x == (map.getRows() - 1) && y == (map.getColumns() - 1))
         {
             std::cout << "Congratulations you successfully passed to the next level!" << std::endl;
             std::cout << "You get 30 points! Choose how to distribute them." << std::endl;
@@ -81,11 +172,14 @@ void TaskManager::playGame(int x, int y)
             double pointDistribution = 0;
             std::cout << "Enter by how many points to increase the force: ";
             std::cin >> pointDistribution;
+            hero->setForse(hero->getForse() + pointDistribution);
             std::cout << "Enter by how many points to increase the mana: ";
             std::cin >> pointDistribution;
+            hero->setMana(hero->getMana() + pointDistribution);
             std::cout << "Enter by how many points to increase the health: ";
             std::cin >> pointDistribution;
-
+            hero->setHealth(hero->getHealth() + pointDistribution);
+            
             coordinates.setX(0);
             coordinates.setY(0);
 
@@ -107,12 +201,16 @@ void TaskManager::playGame(int x, int y)
                 fileNameMap = "Level4.txt";
                 break;
             }
-            GenerateMap tempMap;
+
             std::fstream listOfProperties(fileNameMap.returnChar(), std::ios::in | std::ios::out);
-            listOfProperties >> tempMap;
-            map = tempMap;
+            map.loadFromStream(listOfProperties);
+
             listOfProperties.close();
-            //!!!!!!!!!!!!!trqbwa da uwelicha na chudowishtata stoinostite!!!!!!!!!!!
+            
+            map.increasePerformanceOfMonster(level);
+
+            countM = 0;
+            countT = 0;
         }
         
     }
@@ -122,7 +220,7 @@ TaskManager::TaskManager()
     hero = NULL;
     std::fstream listOfProperties("Level1.txt", std::ios::in | std::ios::out);
     level = 1;
-    listOfProperties >> map;
+    map.loadFromStream(listOfProperties);
 
     isReadFromOpenFile = false;
     isCloseFile = true;
@@ -190,19 +288,19 @@ void TaskManager::openFile()
 }
 void TaskManager::up()
 {
-    playGame(coordinates.getX(), coordinates.getY() - 1);
+    playGame(coordinates.getX() - 1, coordinates.getY());
 }
 void TaskManager::down()
 {
-    playGame(coordinates.getX(), coordinates.getY() + 1);
+    playGame(coordinates.getX() + 1, coordinates.getY());
 }
 void TaskManager::left()
 {
-    playGame(coordinates.getX() - 1, coordinates.getY());
+    playGame(coordinates.getX(), coordinates.getY() - 1);
 }
 void TaskManager::right()
 {
-    playGame(coordinates.getX() + 1, coordinates.getY());
+    playGame(coordinates.getX(), coordinates.getY() + 1);
 }
 void TaskManager::saveAsFile()
 {

@@ -10,11 +10,13 @@ int main()
     // GenerateMap a;
     // listOfProperties >> a;
     // std::cout << a;
+
     TaskManager a;
     a.openFile();
     a.printHeroAndMap();
-    a.up();
-    //a.writeToStream(std::cout);
+    a.down();
+    a.printHeroAndMap();
+
 
     return 0;
 }

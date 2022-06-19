@@ -15,6 +15,38 @@ void Monster::print() const
     armor.print();
     std::cout << "-------------------------" << std::endl;
 }
+double Monster::getForse() const
+{
+    return force;
+}
+double Monster::getMana() const
+{
+    return mana;
+}
+double Monster::getHealth() const
+{
+    return health;
+}
+Armor Monster::getArrmor() const
+{
+    return armor;
+}
+void Monster::setForse(double _forse)
+{
+    force = _forse;
+}
+void Monster::setMana(double _mana)
+{
+    mana = _mana;
+}
+void Monster::setHealth(double _health)
+{
+    health = _health;
+}
+void Monster::setArrmor(Armor& _armor)
+{
+    armor = _armor;
+}
 void Monster::loadFromStream(std::istream& in)
 {
     in >> force;

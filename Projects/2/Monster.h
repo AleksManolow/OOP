@@ -14,6 +14,16 @@ public:
     Monster();
     void print() const;
 
+    double getForse() const;
+    double getMana() const;
+    double getHealth() const;
+    Armor getArrmor() const;
+
+    void setForse(double );
+    void setMana(double );
+    void setHealth(double );
+    void setArrmor(Armor& );
+
     void loadFromStream(std::istream& in);
     void writeToStream(std::ostream& out) const;
 };
