@@ -41,9 +41,6 @@ private:
     void loadFromStream(std::istream& in);
     void writeToStream(std::ostream& out) const;
 
-    //on-screen printing features
-    
-
     //movement on the playing field
     bool thisMovementIsNotPossible(int x, int y);
 
@@ -67,6 +64,11 @@ public:
     void help();
     void exit();
 
+    bool getIsReadFromOpenFile() { return isReadFromOpenFile; }
+    bool getIsCloseFile() { return isCloseFile; }
+    bool getIsSavedInFile() { return isSavedInFile; }
+
+    //on-screen printing features
     void printHeroAndMap();
 };
 

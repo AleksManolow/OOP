@@ -64,7 +64,7 @@ bool TaskManager::battleWithMonsterIsVictory(int numberOfMonster)
     Monster monsterInBattle = map.getAtMonster(numberOfMonster);
     double heroHealth = hero->getHealth();
 
-    while(monsterInBattle.getHealth() < 0 && hero->getHealth() < 0)
+    while(monsterInBattle.getHealth() > 0 && hero->getHealth() > 0)
     {
         String choise;
         std::cout << "Choose whether to hit the monster with a \"Power attack\" or by \"Casting a spell\"!" << std::endl;
@@ -72,24 +72,39 @@ bool TaskManager::battleWithMonsterIsVictory(int numberOfMonster)
         std::cin >> choise;
         if (choise == "Power attack")
         {
-            double damage = monsterInBattle.getHealth() - hero->getForse();  
-            monsterInBattle.setHealth();
+
+            double demageWeapon = (hero->getWeapon().getPercent() / 100) * hero->getForse();
+            double demageBeforeArmor = hero->getForse() + demageWeapon;
+            double demegeAfterArmor = demageBeforeArmor - ((monsterInBattle.getArrmor().getPercent() / 100) * demageBeforeArmor); 
+            monsterInBattle.setHealth(monsterInBattle.getHealth() - demegeAfterArmor);
         }
         else if (choise == "Casting a spell")
         {
-            onsterInBattle.setHealth();
+            double demageSpell = (hero->getSpell().getPercent() / 100) * hero->getForse();
+            double demageBeforeArmor = hero->getForse() + demageSpell;
+            double demegeAfterArmor = demageBeforeArmor - ((monsterInBattle.getArrmor().getPercent() / 100) * demageBeforeArmor); 
+            monsterInBattle.setHealth(monsterInBattle.getHealth() - demegeAfterArmor);
         }
         else
         {
             std::cout << "Envalid choice" << std::endl;
         }
+        if (monsterInBattle.getHealth() < 0)
+        {
+            break;
+        }
         
-        hero->setHealth();
+        double demageMonsterAfterArmor = monsterInBattle.getForse() - ((hero->getArrmor().getPercent() / 100) * monsterInBattle.getForse());
+        hero->setHealth(hero->getHealth() - demageMonsterAfterArmor);
+
+        std::cout << "INDICATORS OF THE HEROES IN BATTLE" << std::endl;
+        hero->print();
+        monsterInBattle.print();
     }
 
     if (hero->getHealth() > 0)
     {
-        hero->setHealth(hero->getHealth() + (heroHealth - hero->getHealth() / 2));
+        hero->setHealth(hero->getHealth() + ((heroHealth - hero->getHealth()) / 2));
         return true;
     }
     else
@@ -108,13 +123,24 @@ void TaskManager::playGame(int x, int y)
         static int countM = 0;
         static int countT = 0;
 
+        if (map.getAt(x, y) == '.')
+        {
+            map.setAt(coordinates.getX(), coordinates.getY(), '.');
+            map.setAt(x, y, 'H');
+            coordinates.setX(x);
+            coordinates.setY(y);
+        }
         if (map.getAt(x, y) == 'M')
         {
             
             if (battleWithMonsterIsVictory(countM))
             {
                 std::cout << "You successfully defeated this monster!" << std::endl;
-                map.setAt(x ,y ,'.');
+                countM++;
+                map.setAt(coordinates.getX(), coordinates.getY(), '.');
+                map.setAt(x, y, 'H');
+                coordinates.setX(x);
+                coordinates.setY(y);
             }
             else
             {
@@ -151,16 +177,25 @@ void TaskManager::playGame(int x, int y)
                 {
                     std::cout << "Unsuccessful retrieval of the treasure!" << std::endl;
                 }
-                map.setAt(x ,y ,'.');
+                countT++;
+                map.setAt(coordinates.getX(), coordinates.getY(), '.');
+                map.setAt(x, y, 'H');
+                coordinates.setX(x);
+                coordinates.setY(y);
             }
             else if(choice == "No")
             {
                 std::cout << "You did not take the treasure!" << std::endl;
+                countT++;
+                map.setAt(coordinates.getX(), coordinates.getY(), '.');
+                map.setAt(x, y, 'H');
+                coordinates.setX(x);
+                coordinates.setY(y);
             }
             else
             {
                 std::cout << "Invalid choice!" << std::endl;
-            }     
+            }
         }
 
 
@@ -208,6 +243,7 @@ void TaskManager::playGame(int x, int y)
             listOfProperties.close();
             
             map.increasePerformanceOfMonster(level);
+            map.setAt(coordinates.getX(), coordinates.getY(), 'H');
 
             countM = 0;
             countT = 0;
@@ -226,7 +262,7 @@ TaskManager::TaskManager()
     isCloseFile = true;
 
 
-    isSavedInFile = false;
+    isSavedInFile = true;
 }
 TaskManager::~TaskManager()
 {
@@ -278,8 +314,10 @@ void TaskManager::openFile()
                 std::cout << "You run the game successfully!" << std::endl;
             }
             file.close();
-            isCloseFile = true;
         }
+        map.setAt(coordinates.getX(), coordinates.getY(), 'H');
+        isCloseFile = true;
+        isSavedInFile = false;
     }
     else
     {
@@ -352,5 +390,15 @@ void TaskManager::closeFile()
 }
 void TaskManager::help()
 {
-
+    std::cout << "The following commands are supported :" << std::endl;
+    std::cout << "open      opens a found file or creates a file" << std::endl;
+    std::cout << "up        \"up\" to navigate the map" << std::endl;
+    std::cout << "down		\"down\" to navigate the map" << std::endl;
+    std::cout << "left	    \"left\" to navigate the map" << std::endl;
+    std::cout << "right	    \"right\" to navigate the map" << std::endl;
+    std::cout << "help		 prints this information" << std::endl;
+    std::cout << "save       saves to file" << std::endl;
+    std::cout << "save as    saves to a new file" << std::endl;
+    std::cout << "close      closes the file if it is not closed" << std::endl;
+    std::cout << "exit		 exiting the program" << std::endl;  
 }
