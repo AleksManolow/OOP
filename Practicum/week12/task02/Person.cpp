@@ -1,13 +1,12 @@
-#include"People.h"
-
-char* People::allocateMemory(char* s)
+#include"Person.h"
+char* Person::allocateMemory(char* s)
 {
     char* result = new char[strlen(s) + 1];
     strcpy(result, s);
 
     return result;
 }
-void deleteMemory(char* s)
+void Person::deleteMemory(char* s)
 {
     if (s != NULL)
     {
@@ -15,22 +14,22 @@ void deleteMemory(char* s)
     }
     
 }
-People::People()
+Person::Person()
 {
     EGN = NULL;
     name = NULL;
 }
-People::People(char* _EGN, char* _name)
+Person::Person(char* _EGN, char* _name)
 {
     EGN = allocateMemory(_EGN);
     name = allocateMemory(_name);
 }
-People::People(const People& other)
+Person::Person(const Person& other)
 {
     EGN = allocateMemory(other.EGN);
     name = allocateMemory(other.name);
 }
-People& People::operator=(const People& other)
+Person& Person::operator=(const Person& other)
 {
     if (this != &other)
     {
@@ -43,12 +42,12 @@ People& People::operator=(const People& other)
 
     return *this;
 }
-People::~People()
+Person::~Person()
 {
     deleteMemory(EGN);
     deleteMemory(name);
 }
-void People::print()
+void Person::print()
 {
     std::cout << EGN << std::endl;
     std::cout << name << std::endl;
