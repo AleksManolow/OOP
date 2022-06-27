@@ -1,10 +1,11 @@
 #include<iostream>
-#include"Person.h"
+#include"Reader.h"
 int main()
 {
     char* EGN = "0123456789";
     char* name = "aleks";
-    Person a(EGN, name);
+    char* ID = "41651465165";
+    Reader a(EGN, name, ID);
     a.print();
     return 0;
 }

@@ -8,6 +8,7 @@ private:
     char* EGN;
     char* name;
 
+protected:
     char* allocateMemory(char* s);
     void deleteMemory(char* s);
 public:
