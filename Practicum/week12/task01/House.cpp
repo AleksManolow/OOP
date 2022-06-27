@@ -32,6 +32,10 @@ House::~House()
 {
     deleteMemory(ownerName);
 }
+double House::averageFloorHeight()
+{
+    return Building::getHeight() / (double)floor; 
+}
 void House::loadFromStream(std::istream& is)
 {
     Building::loadFromStream(is);

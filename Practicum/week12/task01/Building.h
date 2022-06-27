@@ -19,6 +19,8 @@ public:
     Building& operator=(const Building& );
     ~Building();
 
+    int getHeight() {   return height;  };
+
     void loadFromStream(std::istream& is);
     void writeToStream(std::ostream& os);
 };

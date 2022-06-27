@@ -14,6 +14,8 @@ public:
     House& operator=(const House& );
     ~House();
 
+    double averageFloorHeight();
+
     void loadFromStream(std::istream& is);
     void writeToStream(std::ostream& os);
 };

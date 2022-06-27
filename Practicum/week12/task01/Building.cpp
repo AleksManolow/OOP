@@ -13,7 +13,6 @@ void Building::deleteMemory(char* s)
     {
         delete[] s;
     }
-    
 }
 Building::Building()
 {
