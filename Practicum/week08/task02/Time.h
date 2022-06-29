@@ -1,8 +1,9 @@
 #ifndef TIME_H
 #define TIME_H
 
-struct Time
+class Time
 {
+public:
 	int mHours;
 	int mMinutes;
 };
