@@ -1,8 +1,9 @@
 #ifndef RECORD_N
 #define RECORD_N
 
-struct Record
+class Record
 {
+public:
     char* mWord;
     char* mMeaning;
 
