@@ -2,9 +2,10 @@
 #define TIME_H
 #include<iostream>
 
-struct Time
+class Time
 {
-    int mHours;
-    int mMinutes;
+public:
+	int mHours;
+	int mMinutes;
 };
 #endif
