@@ -369,5 +369,3 @@ FodyWeavers.xsd
 *.exe
 *.out
 
-// Leftover txt files
-*.txt
