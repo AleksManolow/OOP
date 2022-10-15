@@ -1,23 +1,26 @@
-# Course Object-oriented programming C++ @FMI
-## The topics I have learned in the course on Object-oriented programming in C++ at @FMI:
-**1. Introduction to Object-oriented programming**
+# :books: Object oriented programming course at FMI Sofia University
 
-**2. Structures (records)**
 
-**3. Classes**
+#### :pushpin: Practicum content by weeks:
 
-**4. Canonical class form**
+###### :one: Revision. What the OOP? Structures
 
-**5. Redefining operators**
+###### :two: Structures
 
-**6. Friendly functions and classes**
+###### :three: Separate compilation. Coding conventions.
 
-**7. Streams**
+###### :four: Unit testing. Doctest framework.
 
-**8. Files and Handlers**
+###### :five: Classes. Big three.
 
-**9. Function and class templates**
+###### :six: Friend functions and classes. Operator overloading. String implementation.
 
-**10. Static member-data and member-functions**
+###### :seven: Files and streams. Exercise.
 
-**11. Inheritance**
+###### :eight: Exercise.
+
+###### :nine: Move semantics. Pass by reference vs. pass by value. Static fields and methods.
+
+###### :one::zero: Templates.Vector implementation.
+
+###### :one::one: Inheritance.
