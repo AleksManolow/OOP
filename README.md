@@ -1,4 +1,4 @@
-# :books: Object oriented programming course at FMI Sofia University
+# :books: Object-oriented programming course at FMI Sofia University
 
 
 #### :pushpin: Practicum content by weeks:
